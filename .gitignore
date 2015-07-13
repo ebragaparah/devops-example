@@ -5,3 +5,5 @@ build/
 *.iws
 *.DS_Store
 .gradle/
+*.jar
+.vagrant

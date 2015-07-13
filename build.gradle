@@ -30,6 +30,24 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.3'
 }
 
+task stage(type: Copy, dependsOn: ['clean', 'assemble']) {
+    from jar.archivePath
+    into project.rootDir
+    rename {
+        'helloworld.jar'
+    }
+}
+
+stage.mustRunAfter(clean)
+
+task deployLocalAppServer(type: Exec) {
+    commandLine "sh", "infrastructure/scripts/install.sh"
+}
+
+clean << {
+    project.file('helloworld.jar').delete()
+}
+
 test {
 
     clean.execute()
